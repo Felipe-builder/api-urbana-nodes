@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up (queryInterface) {
 
     await queryInterface.bulkInsert('Usuarios', [
       {
@@ -39,10 +39,10 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date()
       }
-    ], {});
+    ], {})
   },
 
-  async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('Usuarios', null, {});
+  async down (queryInterface) {
+    await queryInterface.bulkDelete('Usuarios', null, {})
   }
-};
+}
