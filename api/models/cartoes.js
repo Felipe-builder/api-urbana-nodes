@@ -23,7 +23,13 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Cartoes',
-    paranoid: true
+    paranoid: true,
+    defaultScope: {
+      where: { status: true }
+    },
+    scopes: {
+      todos: { where: {} },
+    }
   })
   return Cartoes
 }

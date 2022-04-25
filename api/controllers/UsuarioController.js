@@ -67,6 +67,20 @@ class UsuarioController {
       return res.status(500).json(error.message)
     }
   }
+
+  static async restauraUsuario(req, res) {
+    const { id } = req.params
+    try {
+      await database.Usuarios.restore({
+        where: {
+          id: Number(id)
+        }
+      })
+      return res.status(200).json(`ÌD ${id} restaurado com sucesso`)
+    } catch (error) {
+      return res.status(500).json(error.message)
+    }
+  }
 }
 
 module.exports = UsuarioController

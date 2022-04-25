@@ -9,5 +9,6 @@ router
   .post('/usuarios', UsuarioController.criaUsuario)
   .put('/usuarios/:id', UsuarioController.atualizaUsuario)
   .delete('/usuarios/:id', UsuarioController.apagaUsuario)
+  .get('/usuarios/:id/restaura', UsuarioController.restauraUsuario)
 
 module.exports = router

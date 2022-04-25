@@ -3,9 +3,18 @@ const database = require('../models')
 class CartaoController {
   static async pegaTodosCartoes(req, res){
     try {
-      const todosCartoes = await database.Cartoes.findAll()
+      const todosCartoes = await database.Cartoes.scope('todos').findAll()
       return res.status(200).json(todosCartoes)
     } catch (error){
+      return res.status(500).json(error.message)
+    }
+  }
+
+  static async pegaCartoesAtivos(req, res) {
+    try {
+      const cartoesAtivos = await database.Cartoes.findAll()
+      return res.status(200).json(cartoesAtivos)
+    } catch (error) {
       return res.status(500).json(error.message)
     }
   }
@@ -62,6 +71,20 @@ class CartaoController {
       })
       return res.status(200).json({ mensagem: `Cartão do ID ${id} apagado!`})
     } catch (error) {
+      return res.status(500).json(error.message)
+    }
+  }
+
+  static async restauraCartao(req, res) {
+    const { id } = req.params
+    try {
+      await database.Cartoes.restore({
+        where: {
+          id: Number(id)
+        }
+      })
+      return res.status(200).json({ mensagem: `Cartão do ID ${id} restaurado`})
+    } catch(error) {
       return res.status(500).json(error.message)
     }
   }
