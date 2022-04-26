@@ -81,6 +81,17 @@ class UsuarioController {
       return res.status(500).json(error.message)
     }
   }
+
+  static async pegaCartoesUsuario(req, res) {
+    const { usuarioId } = req.params
+    try {
+      const usuario = await database.Usuarios.findOne({ where: {id: Number(usuarioId)}})
+      const cartoes = await usuario.getCartoesAtivos()
+      return res.status(200).json(cartoes)
+    } catch (error) {
+      return res.status(500).json(error.message)
+    }
+  }
 }
 
 module.exports = UsuarioController
