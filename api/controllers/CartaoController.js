@@ -1,9 +1,17 @@
 const database = require('../models')
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op
 
 class CartaoController {
   static async pegaTodosCartoes(req, res){
+    const { data_inicial, data_final } = req.query
+    const where = {}
+    data_inicial || data_final ? where.createdAt = {} : null
+    data_inicial ? where.createdAt[Op.gte] = data_inicial : null
+    data_final ? where.createdAt[Op.lte] = data_final : null
+    
     try {
-      const todosCartoes = await database.Cartoes.scope('todos').findAll()
+      const todosCartoes = await database.Cartoes.scope('todos').findAll({ where })
       return res.status(200).json(todosCartoes)
     } catch (error){
       return res.status(500).json(error.message)
